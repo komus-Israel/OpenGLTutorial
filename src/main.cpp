@@ -1,5 +1,4 @@
-#include <iostream>
-#include "windowHandler.h"
+#include "windowHandler.hpp"
 
 class App {
 
