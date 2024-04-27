@@ -46,6 +46,9 @@ public:
         //  checks start of each loop if GLFW has been instructed to close
         while (!glfwWindowShouldClose(window)) {
 
+            //terminate window upon escape key
+            processInput();
+
             //  swap the color bufer
             glfwSwapBuffers(window);
 
@@ -53,7 +56,16 @@ public:
             glfwPollEvents();
         }
     }
+
+    //  terminate window if pressed key is escape key
+    void processInput() {
+
+        if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+            glfwSetWindowShouldClose(window, true);
+        }
+
+    }
+
     
-  
 
 };
