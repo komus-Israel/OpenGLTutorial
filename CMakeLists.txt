@@ -6,4 +6,9 @@ add_executable(opengl_project src/main.cpp)
 target_link_libraries(opengl_project
     glfw
     GL
+    X11
+    pthread
+    Xrandr
+    Xi
+    dl
 )
