@@ -1,5 +1,4 @@
 #include <iostream>
-#include "glad/glad.h"
 #include "windowHandler.h"
 
 class App {
@@ -9,25 +8,31 @@ class App {
     
 public:
 
+
     void run() {
 
         initWindow();
+        initGlad();
 
+        
     }
 
     void initWindow() {
 
-        glfwInit();
-
-        //   first argument tells what option to configure from a large enum of options
-        //   prefixed with GLFW_
-        //   second argument is an integer that sets the value of the option
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
         windowHandler.createWindow();
 
+    }
+
+    //  manage function pointers
+    void initGlad() {
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+            throw std::runtime_error("Failed to Initialize GLAD");
+        }
+    }
+
+    //  keep application alive    
+    void handleLoop() {
+        windowHandler.renderLoop();
     }
 
 
@@ -50,4 +55,5 @@ int main() {
 
     return EXIT_SUCCESS;
     
+
 }
