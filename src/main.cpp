@@ -13,6 +13,7 @@ public:
 
         initWindow();
         initGlad();
+        handleLoop();
 
         
     }
