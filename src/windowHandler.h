@@ -42,8 +42,14 @@ public:
 
     //  Keep the application running until user stops the application
     void renderLoop() {
+
+        //  checks start of each loop if GLFW has been instructed to close
         while (!glfwWindowShouldClose(window)) {
+
+            //  swap the color bufer
             glfwSwapBuffers(window);
+
+            //  checks if any events are triggered
             glfwPollEvents();
         }
     }

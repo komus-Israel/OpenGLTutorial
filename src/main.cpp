@@ -14,6 +14,7 @@ public:
         initWindow();
         initGlad();
         handleLoop();
+        clean();
 
         
     }
@@ -34,6 +35,11 @@ public:
     //  keep application alive    
     void handleLoop() {
         windowHandler.renderLoop();
+    }
+
+    //  clean GLFW resources upon render loop exit
+    void clean() {
+        glfwTerminate();
     }
 
 
