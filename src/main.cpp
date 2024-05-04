@@ -47,6 +47,7 @@ public:
 
     void handlePipeline() {
         pipeline.handleVBO();
+        pipeline.setVertexAttribute();
         pipeline.compileVertexShader();     //  compile vertex shader
         pipeline.compileFragmentShader();   //  compile fragment shader
         pipeline.createShaderProgram(       //  create program and link shaders

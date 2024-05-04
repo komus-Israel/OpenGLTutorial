@@ -163,6 +163,16 @@ public:
         glDeleteShader(fragmentShader);
     }
 
+    //  Instruct OPENGL on how it should interpret the vertex data (per vertex attribute)
+    //  using `glVertexAttribPointer`
+    //  float size is 4 bytes, this represents the size of each position in a vertex
+    //  The stride for a single 3D vertex will be 3 * 4 =  12. 
+    //  A 3D vertex will have 12bytes by implication
+    void setVertexAttribute() {
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+    }
+
 
 };
 
