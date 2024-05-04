@@ -28,7 +28,9 @@ class GraphicsPipeline {
 
 private:
 
-     void compileShader(const char *shaderSource, unsigned int shaderType) {
+    unsigned int VBO;
+
+     unsigned int compileShader(const char *shaderSource, unsigned int shaderType) {
        
         //  In order for opengl to use the shader, it has to dynamically compile it at run-time from its
         //  source code
@@ -49,22 +51,25 @@ private:
 
             if (shaderType == GL_VERTEX_SHADER) {
 
-                throw std::runtime_error("Vertex Shader compilation failed");
+                throw std::runtime_error("Vertex Shader compilation failed!");
 
             } else if (shaderType == GL_FRAGMENT_SHADER) {
 
-                throw std::runtime_error("Fragment Shader compilation failed");
+                throw std::runtime_error("Fragment Shader compilation failed!");
 
             }
             
         }
+
+        return shader;
     }   
 
 
 public:
-    unsigned int VBO;
+
     unsigned int vertexShader;
     unsigned int fragmentShader;
+    unsigned int shaderProgram;
 
     //  vertices data for the triangle
     float vertices[9] = {
@@ -104,7 +109,7 @@ public:
         //  This memory is handled by the VBO
 
         //  compile vertex shader
-        compileShader(vertexShaderSource, GL_VERTEX_SHADER);
+        vertexShader = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
 
     }
 
@@ -114,8 +119,48 @@ public:
     void compileFragmentShader() {
 
        //   compile fragment shader
-       compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
+       fragmentShader = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
 
+    }
+
+    //  Shader Program object is the final linked version of multiple shaders combined
+    //  To use the compiled shaders, they need to be linked to a shader program object
+    //  Afterwards, the shader program is activated when rendering objects
+    //  When linking the shaders into a program, it links the output of each shader to the inputs of the next shader
+    void createShaderProgram(unsigned int vtxShader, unsigned int fragShader) {
+
+        //  create shader program
+        shaderProgram = glCreateProgram();
+
+        //  attach the compiled shaders to the program
+        glAttachShader(shaderProgram, vtxShader);
+        glAttachShader(shaderProgram, fragShader);
+        
+        //  link the shaders via he shaderProgram
+        glLinkProgram(shaderProgram);
+
+        int success;
+        char infoLog[512];
+        glGetProgramiv(shaderProgram, GL_COMPILE_STATUS, &success);
+    
+        if (!success) {
+            glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+            std::cout << infoLog << std::endl;
+            throw std::runtime_error("Shader Program Linking Failed!");
+    
+        }
+
+    }
+
+    //  Activate shader program
+    void useProgram() {
+        glUseProgram(shaderProgram);
+    }
+
+    //  Delete shader objects once linked into program object as they are no longer needed
+    void deleteShaders() {
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
     }
 
 
