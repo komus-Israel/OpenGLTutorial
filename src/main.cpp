@@ -1,5 +1,5 @@
 #include "windowHandler.hpp"
-#include "pipeline.hpp"
+
 
 class App {
 
@@ -7,8 +7,6 @@ class App {
     WindowHandler windowHandler;
     GraphicsPipeline pipeline;
 
-    
-    
 public:
 
     void run() {
@@ -37,25 +35,29 @@ public:
 
     //  keep application alive    
     void handleLoop() {
-        windowHandler.renderLoop();
+        windowHandler.renderLoop(pipeline);
     }
 
     //  clean GLFW resources upon render loop exit
     void clean() {
+
+            
         glfwTerminate();
     }
 
     void handlePipeline() {
-        pipeline.handleVBO();
-        pipeline.setVertexAttribute();
         pipeline.compileVertexShader();     //  compile vertex shader
         pipeline.compileFragmentShader();   //  compile fragment shader
         pipeline.createShaderProgram(       //  create program and link shaders
             pipeline.vertexShader,
             pipeline.fragmentShader
         );
-        pipeline.useProgram();              //  activate shader program
-        pipeline.deleteShaders();           //  delete shaders once linked
+        pipeline.deleteShaders();  
+        pipeline.generateVAO();
+        pipeline.handleVBO();
+        pipeline.setVertexAttribute();
+        
+        
     }
 
 

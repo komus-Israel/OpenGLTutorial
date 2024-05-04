@@ -28,8 +28,6 @@ class GraphicsPipeline {
 
 private:
 
-    unsigned int VBO;
-
      unsigned int compileShader(const char *shaderSource, unsigned int shaderType) {
        
         //  In order for opengl to use the shader, it has to dynamically compile it at run-time from its
@@ -70,6 +68,8 @@ public:
     unsigned int vertexShader;
     unsigned int fragmentShader;
     unsigned int shaderProgram;
+    unsigned int VBO;
+    unsigned int VAO;
 
     //  vertices data for the triangle
     float vertices[9] = {
@@ -78,10 +78,16 @@ public:
         0.0f, 0.5f, 0.0f
     };
 
+    void bindVAO() {
+        glBindVertexArray(VAO);
+    }
+
     //  Vertex buffer objects
     //  Memory handler to store the vertex data on the GPU
     //  VBO can store a large numer of vetices in the GPU's memory
     void handleVBO() {
+
+        bindVAO();
 
         //  Generate a buffer with an ID
         glGenBuffers(1, &VBO);
@@ -95,6 +101,24 @@ public:
         //  copy the defined vertex into buffer's memory
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+    }
+
+    //  Instruct OPENGL on how it should interpret the vertex data (per vertex attribute)
+    //  using `glVertexAttribPointer`
+    //  float size is 4 bytes, this represents the size of each position in a vertex
+    //  The stride for a single 3D vertex will be 3 * 4 =  12. 
+    //  A 3D vertex will have 12bytes by implication
+    void setVertexAttribute() {
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+    }
+
+    //  To use a VAO, bind it using `glBindVertexArray`
+    void generateVAO() {
+
+        //  Generate VAO
+        glGenVertexArrays(1, &VAO);
+ 
     }
 
 
@@ -136,7 +160,7 @@ public:
         glAttachShader(shaderProgram, vtxShader);
         glAttachShader(shaderProgram, fragShader);
         
-        //  link the shaders via he shaderProgram
+        //  link the shaders via the shaderProgram
         glLinkProgram(shaderProgram);
 
         int success;
@@ -163,14 +187,8 @@ public:
         glDeleteShader(fragmentShader);
     }
 
-    //  Instruct OPENGL on how it should interpret the vertex data (per vertex attribute)
-    //  using `glVertexAttribPointer`
-    //  float size is 4 bytes, this represents the size of each position in a vertex
-    //  The stride for a single 3D vertex will be 3 * 4 =  12. 
-    //  A 3D vertex will have 12bytes by implication
-    void setVertexAttribute() {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
+    void drawTriangle(uint32_t numOfVertices) {
+        glDrawArrays(GL_TRIANGLES, 0, numOfVertices);
     }
 
 
