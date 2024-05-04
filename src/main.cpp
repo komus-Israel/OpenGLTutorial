@@ -47,6 +47,7 @@ public:
 
     void handlePipeline() {
         pipeline.handleVBO();
+        pipeline.compileVertexShader();
     }
 
 
