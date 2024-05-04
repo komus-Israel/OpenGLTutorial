@@ -1,17 +1,21 @@
 #include "windowHandler.hpp"
+#include "pipeline.hpp"
 
 class App {
 
     
     WindowHandler windowHandler;
+    GraphicsPipeline pipeline;
+
+    
     
 public:
-
 
     void run() {
 
         initWindow();
         initGlad();
+        handlePipeline();
         handleLoop();
         clean();
 
@@ -39,6 +43,10 @@ public:
     //  clean GLFW resources upon render loop exit
     void clean() {
         glfwTerminate();
+    }
+
+    void handlePipeline() {
+        pipeline.handleVBO();
     }
 
 

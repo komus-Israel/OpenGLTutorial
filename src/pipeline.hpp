@@ -11,7 +11,7 @@ class GraphicsPipeline {
     //  Secondly, the 2D co-ordinates are converted into colored pixels
 
 public:
-    uint VBO;
+    unsigned int VBO;
 
     //  vertices data for the triangle
     float vertices[9] = {
@@ -27,6 +27,8 @@ public:
 
         //  Generate a buffer with an ID
         glGenBuffers(1, &VBO);
+
+        // std::cout << "VBO: " << VBO << std::endl;
 
         //  Bind buffer
         //  Buffer type for VBO is `GL_ARRAY_BUFFER`
