@@ -1,9 +1,8 @@
-#include "glad/glad.h"
-#include <GLFW/glfw3.h>
-#include <iostream>
+#include "pipeline.hpp"
 
 
 class WindowHandler {
+
 
 public:
     GLFWwindow* window;
@@ -42,16 +41,22 @@ public:
     }
 
     //  Keep the application running until user stops the application
-    void renderLoop() {
+    void renderLoop(GraphicsPipeline pipeline) {
 
         //  checks start of each loop if GLFW has been instructed to close
         while (!glfwWindowShouldClose(window)) {
 
-            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
 
             //terminate window upon escape key
             processInput();
+
+            glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+
+            //  draw triangle
+            pipeline.useProgram();              //  activate shader program
+            pipeline.bindVAO();                 //  Bind the VAO before drawing the triangle
+            pipeline.drawTriangle(3);          //  draw triangle
 
             //  swap the color bufer
             glfwSwapBuffers(window);
