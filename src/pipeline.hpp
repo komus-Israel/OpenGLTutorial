@@ -70,12 +70,28 @@ public:
     unsigned int shaderProgram;
     unsigned int VBO;
     unsigned int VAO;
+    unsigned int EBO;
 
     //  vertices data for the triangle
-    float vertices[9] = {
-        -0.5f, -0.5f, 0.0f,
+    //  Vertex data is a collection of vertices
+    // float vertices[9] = {
+    //     -0.5f, -0.5f, 0.0f,
+    //     0.5f, -0.5f, 0.0f,
+    //     0.0f, 0.5f, 0.0f
+    // };
+
+    //  Unique Vertices for rectangle (to be used for EBO)
+    float vertices[12] = {
+        0.5f, 0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+        -0.5f, -0.5f, 0.0f,
+        -0.5f, 0.5f, 0.0f
+    };
+
+    //  note that indices starts from 0 (to be used for EBO)
+    unsigned int indices[6] = {
+        0, 1 , 3,
+        1, 2, 3
     };
 
     void bindVAO() {
@@ -94,12 +110,26 @@ public:
 
         // std::cout << "VBO: " << VBO << std::endl;
 
-        //  Bind buffer
+        //  Bind buffer to the `GL_ARRAY_BUFFER`
         //  Buffer type for VBO is `GL_ARRAY_BUFFER`
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-        //  copy the defined vertex into buffer's memory
+        //  copy the defined vertex into memory of the buffer currently binded, in 
+        //  this case, the VBO
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    }
+
+    void handleEBO() {
+
+        //  Generate buffer with an ID
+        glGenBuffers(1, &EBO);
+
+        //  Bind EBO
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+
+        //  copy indices into the buffer
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     }
 
@@ -188,7 +218,14 @@ public:
     }
 
     void drawTriangle(uint32_t numOfVertices) {
-        glDrawArrays(GL_TRIANGLES, 0, numOfVertices);
+        // glDrawArrays(GL_TRIANGLES, 0, numOfVertices); // for vertices
+
+        //  For EBO
+        //  First argument specifies the mode to draw in
+        //  Second: the total number of vertices, since 6 indices were to be drawn
+        //  Third: The type of the indices
+        //  Fourth: Offset in the EBO
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     }
 
 

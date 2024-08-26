@@ -40,12 +40,12 @@ public:
 
     //  clean GLFW resources upon render loop exit
     void clean() {
-
-            
+     
         glfwTerminate();
     }
 
     void handlePipeline() {
+
         pipeline.compileVertexShader();     //  compile vertex shader
         pipeline.compileFragmentShader();   //  compile fragment shader
         pipeline.createShaderProgram(       //  create program and link shaders
@@ -55,6 +55,7 @@ public:
         pipeline.deleteShaders();  
         pipeline.generateVAO();
         pipeline.handleVBO();
+        pipeline.handleEBO();
         pipeline.setVertexAttribute();
         
         
@@ -66,7 +67,6 @@ public:
 int main() {
 
     App app;
-
     
     try
     {
