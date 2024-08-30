@@ -234,9 +234,11 @@ public:
     void changeColorUsingUniform() {
         float timeValue = glfwGetTime();
         float greenValue = (std::sin(timeValue) / 2.0f) + 0.5f;
+        float blueValue = (std::sin(timeValue) / 6.0f) + 0.6f;
+        float redValue = blueValue + greenValue;
         int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
         // useProgram();
-        glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+        glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
     }
 
 };
