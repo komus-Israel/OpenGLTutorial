@@ -236,8 +236,11 @@ public:
         float greenValue = (std::sin(timeValue) / 2.0f) + 0.5f;
         float blueValue = (std::sin(timeValue) / 6.0f) + 0.6f;
         float redValue = blueValue + greenValue;
+
+        /// Query the uniform's location using the name
         int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-        // useProgram();
+        
+        /// set the uniform value
         glUniform4f(vertexColorLocation, redValue, greenValue, blueValue, 1.0f);
     }
 
