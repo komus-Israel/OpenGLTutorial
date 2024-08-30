@@ -58,7 +58,7 @@ public:
             pipeline.changeColorUsingUniform(); //  update color in fragment shader using uniform
             pipeline.bindVAO();                 //  Bind the VAO before drawing the triangle
             pipeline.drawTriangle(3);          //  draw triangle
-            glBindVertexArray(0);
+            // glBindVertexArray(0);
 
             //  swap the color bufer
             glfwSwapBuffers(window);
