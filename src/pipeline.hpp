@@ -84,13 +84,6 @@ public:
         0.0f, 0.5f, 0.0f
     };
 
-    float verticess[9] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
-    };
-    
-
     //  Unique Vertices for rectangle (to be used for EBO)
     // float vertices[12] = {
     //     0.5f, 0.5f, 0.0f,
