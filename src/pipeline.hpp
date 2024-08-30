@@ -28,7 +28,7 @@ class GraphicsPipeline {
         "in vec3 ourColor;\n"
         "void main()\n"
         "{\n"
-        "   FragColor = vec3(ourColor, 1.0);\n"
+        "   FragColor = vec4(ourColor, 1.0);\n"
         "}\0";
     ;
 
