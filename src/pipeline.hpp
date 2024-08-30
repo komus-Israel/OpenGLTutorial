@@ -79,9 +79,11 @@ public:
     //  vertices data for the triangle
     //  Vertex data is a collection of vertices
     std::vector<float> vertices = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+
+        //  positions           //  colors
+        -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.0f,      0.0f, 1.0f, 0.0f,
+        0.0f, 0.5f, 0.0f,       0.0f,0.0f, 1.0f
     };
 
     //  Unique Vertices for rectangle (to be used for EBO)
