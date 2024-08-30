@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 //  The graphics pipeline converts a set of 3D co-ordinates into
 //  2D pixels that fits in the screen
@@ -73,14 +74,22 @@ public:
     unsigned int VBO;
     unsigned int VAO;
     unsigned int EBO;
+    
 
     //  vertices data for the triangle
     //  Vertex data is a collection of vertices
-    float vertices[9] = {
+    std::vector<float> vertices = {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
         0.0f, 0.5f, 0.0f
     };
+
+    float verticess[9] = {
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f, 0.5f, 0.0f
+    };
+    
 
     //  Unique Vertices for rectangle (to be used for EBO)
     // float vertices[12] = {
@@ -118,7 +127,7 @@ public:
 
         //  copy the defined vertex into memory of the buffer currently binded, in 
         //  this case, the VBO
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 
     }
 
