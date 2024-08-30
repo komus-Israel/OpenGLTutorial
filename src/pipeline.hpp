@@ -148,8 +148,12 @@ public:
     //  The stride for a single 3D vertex will be 3 * 4 =  12. 
     //  A 3D vertex will have 12bytes by implication
     void setVertexAttribute() {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); //    stride 24, offset 0
+        glEnableVertexAttribArray(0);       //  Enable the above attribute for the attribute at position 0 (position)
+
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) (3 * sizeof(float))); //    stride 24, offset 12
+        glEnableVertexAttribArray(0);       //  Enable the above attribute for the attribute at position 1 (color)
+
     }
 
     //  To use a VAO, bind it using `glBindVertexArray`
