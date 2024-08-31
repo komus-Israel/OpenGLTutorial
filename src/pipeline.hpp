@@ -10,63 +10,7 @@
 //  Secondly, the 2D co-ordinates are converted into colored pixels
 class GraphicsPipeline {
 
-    //  Vertex Shader
-    const char *vertexShaderSource = "#version 330 core\n"
-        "layout (location=0) in vec3 aPos;\n"   //  the position variable has attribute position 0
-        "layout (location=1) in vec3 aColor;\n" //  the color variable has attribute position 1
-        "out vec3 ourColor;\n"
-        "void main()\n"
-        "{\n"
-        "   gl_Position = vec4(aPos, 1.0);\n"
-        "   ourColor = aColor;\n"
-        "}\0";
-    ;
-
-    //  Fragment Shader
-    const char *fragmentShaderSource = "#version 330 core\n"
-        "out vec4 FragColor;\n"
-        "in vec3 ourColor;\n"
-        "void main()\n"
-        "{\n"
-        "   FragColor = vec4(ourColor, 1.0);\n"
-        "}\0";
-    ;
-
 private:
-
-    // unsigned int compileShader(const char *shaderSource, unsigned int shaderType) {
-       
-    //     //  In order for opengl to use the shader, it has to dynamically compile it at run-time from its
-    //     //  source code
-    //     //  the type of shader being created is passed to function below (vertex, fragment, etc)
-    //     unsigned int shader = glCreateShader(shaderType);
-        
-    //     // Attach the shader source code to the shader object and compile the shader
-    //     glShaderSource(shader, 1, &shaderSource, NULL);
-    //     glCompileShader(shader);
-
-    //     int success;
-    //     char infoLog[512];
-    //     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-
-    //     if (!success) {
-    //         glGetShaderInfoLog(shader, 512, NULL, infoLog);
-    //         std::cout << infoLog << std::endl;
-
-    //         if (shaderType == GL_VERTEX_SHADER) {
-
-    //             throw std::runtime_error("Vertex Shader compilation failed!");
-
-    //         } else if (shaderType == GL_FRAGMENT_SHADER) {
-
-    //             throw std::runtime_error("Fragment Shader compilation failed!");
-
-    //         }
-            
-    //     }
-
-    //     return shader;
-    // }   
 
 
 public:
@@ -163,72 +107,6 @@ public:
         glGenVertexArrays(1, &VAO);
  
     }
-
-
-    //  write the vertex shader in the vertex language (GLSL)
-    //  Takes as input a single vertex
-    //  Transforms 3D co-ordinates into different 3D co-ordinates
-    // void compileVertexShader() {
-
-    //     //  With the vertex data defined, it will be sent as the input to the first process
-    //     //  of the Graphics pipelin: the vertex shader
-    //     //  This is done by creating memory on the GPU where we store the vertex data
-    //     //  This memory is handled by the VBO
-
-    //     //  compile vertex shader
-    //     vertexShader = compileShader(vertexShaderSource, GL_VERTEX_SHADER);
-
-    // }
-
-    //  Fragment shader is about calculating the color output of the pixels
-    //  Colors are represented as an array of 4 values (RGBA)
-    //  The strenth of each component is a value between 0.0 and 1.0
-    // void compileFragmentShader() {
-
-    //    //   compile fragment shader
-    //    fragmentShader = compileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
-
-    // }
-
-    //  Shader Program object is the final linked version of multiple shaders combined
-    //  To use the compiled shaders, they need to be linked to a shader program object
-    //  Afterwards, the shader program is activated when rendering objects
-    //  When linking the shaders into a program, it links the output of each shader to the inputs of the next shader
-    // void createShaderProgram(unsigned int vtxShader, unsigned int fragShader) {
-
-    //     //  create shader program
-    //     shaderProgram = glCreateProgram();
-
-    //     //  attach the compiled shaders to the program
-    //     glAttachShader(shaderProgram, vtxShader);
-    //     glAttachShader(shaderProgram, fragShader);
-        
-    //     //  link the shaders via the shaderProgram
-    //     glLinkProgram(shaderProgram);
-
-    //     int success;
-    //     char infoLog[512];
-    //     glGetProgramiv(shaderProgram, GL_COMPILE_STATUS, &success);
-    
-    //     if (!success) {
-    //         glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-    //         std::cout << infoLog << std::endl;
-    //         throw std::runtime_error("Shader Program Linking Failed!");
-    
-    //     }
-
-    // }
-
-    //  Activate shader program
-    // void useProgram() {
-    //     glUseProgram(shaderProgram);
-    // }
-
-    //  Delete shader objects once linked into program object as they are no longer needed
-    // void deleteShaders() {
-    //     glDeleteShader(vertexShader);
-    //     glDeleteShader(fragmentShader);
-    // }
 
     void drawTriangle(uint32_t numOfVertices) {
         glDrawArrays(GL_TRIANGLES, 0, numOfVertices); // for vertices
