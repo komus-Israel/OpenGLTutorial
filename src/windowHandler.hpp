@@ -1,10 +1,16 @@
 #include "pipeline.hpp"
+#include "shader.hpp"
 
 
 class WindowHandler {
 
 
 public:
+
+    Shader& shader;
+
+    WindowHandler(Shader& _shader) : shader(_shader) {}
+
     GLFWwindow* window;
     
     void createWindow() {
@@ -54,8 +60,8 @@ public:
             glClear(GL_COLOR_BUFFER_BIT);
 
             //  draw triangle
-            pipeline.useProgram();              //  activate shader program
-            pipeline.changeColorUsingUniform(); //  update color in fragment shader using uniform
+            shader.useProgram();              //  activate shader program
+            shader.changeColorUsingUniform(); //  update color in fragment shader using uniform
             pipeline.bindVAO();                 //  Bind the VAO before drawing the triangle
             pipeline.drawTriangle(3);          //  draw triangle
             // glBindVertexArray(0);

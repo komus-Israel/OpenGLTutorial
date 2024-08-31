@@ -1,14 +1,26 @@
 #include "windowHandler.hpp"
 
 
+
+
+
 class App {
 
+
+private:
     
-    WindowHandler windowHandler;
     GraphicsPipeline pipeline;
+    WindowHandler windowHandler;
+    
 
 public:
 
+    Shader shader;
+
+    App(const char* vertexPath, const char* fragmentPath)
+        :shader(vertexPath, fragmentPath), windowHandler(shader)
+    {}
+    
     void run() {
 
         initWindow();
@@ -46,16 +58,10 @@ public:
 
     void handlePipeline() {
 
-        pipeline.compileVertexShader();     //  compile vertex shader
-        pipeline.compileFragmentShader();   //  compile fragment shader
-        pipeline.createShaderProgram(       //  create program and link shaders
-            pipeline.vertexShader,
-            pipeline.fragmentShader
-        );
-        pipeline.deleteShaders();  
+        shader.processShaders();
         pipeline.generateVAO();
         pipeline.handleVBO();
-        // pipeline.handleEBO();
+        // // pipeline.handleEBO();
         pipeline.setVertexAttribute();
         
         
@@ -66,7 +72,7 @@ public:
 
 int main() {
 
-    App app;
+    App app("shaders/shader.vs", "shaders/shader.fs");
     
     try
     {
